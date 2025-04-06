@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel Victim - AI-Powered Trading Platform</title>
+    <link rel="stylesheet" href="../Frontend/css/market-dashboard.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <div class="gradient-overlay"></div>
+    
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-text">Sentinel Victim</div>
+                <div class="ai-dot"></div>
+            </div>
+            <span class="beta-tag">AI-POWERED</span>
+        </div>
+        <nav class="nav-menu">
+            <a href="#markets" class="nav-link">Trader book</a>
+            <a href="#crypto" class="nav-link">Crypto</a>
+            <a href="#stocks" class="nav-link">Stocks</a>
+            <a href="Premium.html" class="login-btn">Premium</a>
+            <a href="signup.html" class="nav-link">Sign Up</a>
+            <a href="login.html" class="login-btn">Login</a>
+            
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Precious Metals Grid -->
+        <div class="metals-grid">
+            <div class="widget-container glow-effect">
+                <h2 class="widget-title">Live Silver Price</h2>
+                <iframe 
+                    src="https://goldbroker.com/widget/live-price/XAG?currency=USD" 
+                    width="100%" 
+                    height="130">
+                </iframe>
+            </div>
+
+            <div class="widget-container glow-effect">
+                <h2 class="widget-title">Live Gold Price</h2>
+                <iframe 
+                    src="https://goldbroker.com/widget/live-price/XAU?currency=USD"
+                    width="100%" 
+                    height="130">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Market Overview Grid -->
+        <div class="market-grid">
+            <div class="widget-container glow-effect">
+                <h2 class="widget-title">Cryptocurrency Markets</h2>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+                    {
+                        "width": "100%",
+                        "height": 400,
+                        "defaultColumn": "overview",
+                        "screener_type": "crypto_mkt",
+                        "displayCurrency": "USD",
+                        "colorTheme": "dark",
+                        "locale": "en"
+                    }
+                    </script>
+                </div>
+            </div>
+
+            <div class="widget-container glow-effect">
+                <h2 class="widget-title">Stock Market Movers</h2>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js" async>
+                    {
+                        "colorTheme": "dark",
+                        "dateRange": "12M",
+                        "exchange": "US",
+                        "showChart": true,
+                        "locale": "en",
+                        "width": "100%",
+                        "height": 400,
+                        "isTransparent": true,
+                        "showSymbolLogo": true,
+                        "plotLineColorGrowing": "rgba(147, 51, 234, 1)",
+                        "plotLineColorFalling": "rgba(147, 51, 234, 1)",
+                        "belowLineFillColorGrowing": "rgba(147, 51, 234, 0.12)",
+                        "belowLineFillColorFalling": "rgba(147, 51, 234, 0.12)"
+                    }
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-container glow-effect">
+            <h2 class="widget-title">Gold Price Chart</h2>
+            <iframe 
+                src="https://ownx.com/prices/gold-xau/?height=500" 
+                width="100%" 
+                height="500">
+            </iframe>
+        </div>
+
+        <div class="cta-section">
+            <div class="ai-circuit-bg"></div>
+            <h1 class="cta-title">Trade Smarter with AI-Powered Insights</h1>
+            <p class="cta-subtitle">Harness the power of artificial intelligence for precise market analysis and trading decisions</p>
+            <a href="signup.html" class="cta-button">
+                Start Trading Now
+                <span class="button-glow"></span>
+            </a>
+        </div>
+    </main>
+
+    <script src="../Frontend/java-script/market-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Threat Detector</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>      
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-shield-alt"></i> Network Threat Detector</h1>
+            <p class="subtitle">Advanced Network Traffic Analysis with Gemini AI</p>
+        </header>
+
+        <div class="dashboard">
+            <div class="control-panel">
+                <div class="summary-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-history"></i>
+                        <div class="stat-info">
+                            <h3>Data Points</h3>
+                            <p id="total-entries">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div class="stat-info">
+                            <h3>Threats Detected</h3>
+                            <p id="threat-count">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="stat-info">
+                            <h3>Normal Traffic</h3>
+                            <p id="normal-count">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock"></i>
+                        <div class="stat-info">
+                            <h3>Last Update</h3>
+                            <p id="last-update">Never</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-panel">
+                    <div class="data-source-selector">
+                        <label for="data-source">Data Source:</label>
+                        <select id="data-source" class="select-input">
+                            <option value="csv">Network Test CSV</option>
+                            <option value="live">Live Network Detection</option>
+                        </select>
+                    </div>
+                    <button id="detect-btn" class="btn primary-btn">
+                        <i class="fas fa-radar"></i> Detect Threats
+                    </button>
+                    <button id="stop-btn" class="btn secondary-btn hidden">
+                        <i class="fas fa-stop"></i> Stop Detection
+                    </button>
+                    <button id="blockchain-btn" class="btn blockchain-btn hidden">
+                        <i class="fas fa-link"></i> Post to Blockchain
+                    </button>
+                    <div class="scan-status hidden">
+                        <div class="loader"></div>
+                        <p>Analyzing network traffic...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="threats">Threats</button>
+                    <button class="tab-btn" data-tab="traffic">All Traffic</button>
+                    <button class="tab-btn" data-tab="analytics">Analytics</button>
+                    <button class="tab-btn" data-tab="logs">Technical Logs</button>
+                    <button class="tab-btn" data-tab="blockchain">Blockchain</button>
+                </div>
+                
+                <div class="tab-content active" id="threats-tab">
+                    <div class="threat-feed">
+                        <h2>Live Threat Detection <span class="live-indicator">LIVE</span></h2>
+                        <div id="threat-feed-container"></div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="traffic-tab">
+                    <div class="traffic-table-container">
+                        <table id="traffic-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Protocol</th>
+                                    <th>Service</th>
+                                    <th>Source Bytes</th>
+                                    <th>Destination Bytes</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="traffic-data"></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="analytics-tab">
+                    <div class="chart-container">
+                        <div class="chart" id="chart-1">
+                            <h3>Attack Distribution</h3>
+                            <canvas id="attack-distribution-chart"></canvas>
+                        </div>
+                        <div class="chart" id="chart-2">
+                            <h3>Protocol Distribution</h3>
+                            <canvas id="protocol-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart" id="chart-3">
+                            <h3>Service Distribution</h3>
+                            <canvas id="service-chart"></canvas>
+                        </div>
+                        <div class="chart" id="chart-4">
+                            <h3>Traffic Timeline</h3>
+                            <canvas id="timeline-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="logs-tab">
+                    <div class="log-controls">
+                        <h2>Technical Logs</h2>
+                        <button id="clear-logs-btn" class="btn small-btn">
+                            <i class="fas fa-trash"></i> Clear Logs
+                        </button>
+                    </div>
+                    <div class="log-console" id="log-console">
+                        <div class="log-entry system-log">
+                            <span class="timestamp">[${new Date().toLocaleTimeString()}]</span>
+                            <span class="log-type">[SYSTEM]</span>
+                            <span class="log-content">Application initialized. Ready to detect network threats.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="blockchain-tab">
+                    <div class="blockchain-header">
+                        <h2>Blockchain Ledger</h2>
+                        <p>Immutable record of all threat detections secured on the blockchain</p>
+                    </div>
+                    <div class="blockchain-container" id="blockchain-container">
+                        <div class="blockchain-placeholder">
+                            <i class="fas fa-link"></i>
+                            <p>No threat data has been posted to the blockchain yet</p>
+                            <p class="blockchain-subtext">Detect threats and use the "Post to Blockchain" button to create immutable records</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-insights">
+            <h2>Gemini AI Insights</h2>
+            <div id="ai-analysis" class="ai-analysis-container">
+                <div class="placeholder-text">
+                    <i class="fas fa-robot"></i>
+                    <p>Click "Detect Threats" to analyze network traffic with Gemini AI</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="notification" class="notification hidden">
+            <div class="notification-content">
+                <i class="fas fa-exclamation-circle"></i>
+                <p id="notification-message"></p>
+            </div>
+            <button id="close-notification" class="close-btn">×</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+    <script src="dual_source.js"></script>
+</body>
+</html>
